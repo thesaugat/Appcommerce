@@ -11,6 +11,10 @@
     <string name="sign_up">Register</string>
 
 
-<!--    sharedpref keys-->
+    <!--    sharedpref keys-->
     <string name="isLoggedKey">isll</string>
+    <string name="home">Home</string>
+    <string name="cart">Cart</string>
+    <string name="wishlist">WishList</string>
+    <string name="profile">Profile</string>
 </resources>

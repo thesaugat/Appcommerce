@@ -2,14 +2,13 @@ package com.thesaugat.appcommerce.splash;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 
-import com.thesaugat.appcommerce.MainActivity;
+import com.thesaugat.appcommerce.home.MainActivity;
 import com.thesaugat.appcommerce.R;
+import com.thesaugat.appcommerce.utils.SharedPrefUtils;
 import com.thesaugat.appcommerce.userAccount.UserAccountActivity;
 
 public class SplashScreenActivity extends AppCompatActivity {
@@ -39,8 +38,6 @@ public class SplashScreenActivity extends AppCompatActivity {
     }
 
     public void getIsLoggedInOrNot() {
-        SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
-        isLoggedIn = sharedPref.getBoolean("isll", false);
-        System.out.println(isLoggedIn);
+        isLoggedIn = SharedPrefUtils.getBool(this, getString(R.string.isLoggedKey), false);
     }
 }

@@ -1,8 +1,6 @@
 package com.thesaugat.appcommerce.userAccount.fragments;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -16,8 +14,9 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import com.thesaugat.appcommerce.MainActivity;
+import com.thesaugat.appcommerce.home.MainActivity;
 import com.thesaugat.appcommerce.R;
+import com.thesaugat.appcommerce.utils.SharedPrefUtils;
 
 public class LoginFragment extends Fragment implements View.OnClickListener {
 
@@ -50,10 +49,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
             if (email.isEmpty() && password.isEmpty())
                 Toast.makeText(getContext(), "Email or Password is Empty!", Toast.LENGTH_LONG).show();
             else if (email.equals("thesaugatt@gmail.com") && password.equals("Pass123")) {
-                SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
-                SharedPreferences.Editor editor = sharedPref.edit();
-                editor.putBoolean("isll", true);
-                editor.apply();
+                SharedPrefUtils.setBoolean(getActivity(), getString(R.string.isLoggedKey), true);
                 getActivity().startActivity(new Intent(getActivity(), MainActivity.class));
                 getActivity().finish();
             } else
