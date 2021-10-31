@@ -14,9 +14,15 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.thesaugat.appcommerce.api.ApiClient;
+import com.thesaugat.appcommerce.api.response.LoginResponse;
 import com.thesaugat.appcommerce.home.MainActivity;
 import com.thesaugat.appcommerce.R;
 import com.thesaugat.appcommerce.utils.SharedPrefUtils;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class LoginFragment extends Fragment implements View.OnClickListener {
 
@@ -48,12 +54,37 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
             password = passwordET.getText().toString();
             if (email.isEmpty() && password.isEmpty())
                 Toast.makeText(getContext(), "Email or Password is Empty!", Toast.LENGTH_LONG).show();
-            else if (email.equals("thesaugatt@gmail.com") && password.equals("Pass123")) {
-                SharedPrefUtils.setBoolean(getActivity(), getString(R.string.isLoggedKey), true);
-                getActivity().startActivity(new Intent(getActivity(), MainActivity.class));
-                getActivity().finish();
-            } else
-                Toast.makeText(getContext(), "Wrong email or password", Toast.LENGTH_LONG).show();
+            else {
+                Call<LoginResponse> loginResponseCall = ApiClient.getClient().login(email, password);
+                loginResponseCall.enqueue(new Callback<LoginResponse>() {
+                    @Override
+                    public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
+                        LoginResponse loginResponse = response.body();
+                        if(response.isSuccessful()){
+                            if(loginResponse.getError()){
+                                System.out.println("222222221222222222222 my error  is: "+ loginResponse.getError());
+
+                            }else {
+//                                SharedPrefUtils.setBoolean(getActivity(), getString(R.string.isLoggedKey), true);
+                                System.out.println("222222221222222222222 my api key is: "+ loginResponse.getApiKey());
+                                getActivity().startActivity(new Intent(getActivity(), MainActivity.class));
+                                getActivity().finish();
+                            }
+
+                        }                    }
+
+                    @Override
+                    public void onFailure(Call<LoginResponse> call, Throwable t) {
+
+                    }
+                });
+            }
+//            else if (email.equals("thesaugatt@gmail.com") && password.equals("Pass123")) {
+//                SharedPrefUtils.setBoolean(getActivity(), getString(R.string.isLoggedKey), true);
+//                getActivity().startActivity(new Intent(getActivity(), MainActivity.class));
+//                getActivity().finish();
+//            } else
+//                Toast.makeText(getContext(), "Wrong email or password", Toast.LENGTH_LONG).show();
         }
 
     }
