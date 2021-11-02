@@ -11,7 +11,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 import com.thesaugat.appcommerce.R;
 import com.thesaugat.appcommerce.home.fragments.CartFragment;
-import com.thesaugat.appcommerce.home.fragments.HomeFragment;
+import com.thesaugat.appcommerce.home.fragments.home.HomeFragment;
 import com.thesaugat.appcommerce.home.fragments.ProfileFragment;
 import com.thesaugat.appcommerce.home.fragments.WishListFragment;
 
