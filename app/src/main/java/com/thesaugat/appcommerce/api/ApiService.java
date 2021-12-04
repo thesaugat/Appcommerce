@@ -1,6 +1,7 @@
 package com.thesaugat.appcommerce.api;
 
 import com.thesaugat.appcommerce.api.response.AllProductResponse;
+import com.thesaugat.appcommerce.api.response.CategoryResponse;
 import com.thesaugat.appcommerce.api.response.LoginResponse;
 import com.thesaugat.appcommerce.api.response.RegisterResponse;
 
@@ -22,4 +23,7 @@ public interface ApiService {
 
     @GET("/api/v1/get-all-products")
     Call<AllProductResponse> getAllProducts();
+
+    @GET("/api/v1/get-categories")
+    Call<CategoryResponse> getCategories();
 }

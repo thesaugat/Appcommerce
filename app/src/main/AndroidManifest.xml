@@ -26,6 +26,7 @@
             </intent-filter>
         </activity>
         <activity
+            android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar"
             android:name=".home.MainActivity"
             android:exported="true"></activity>
     </application>

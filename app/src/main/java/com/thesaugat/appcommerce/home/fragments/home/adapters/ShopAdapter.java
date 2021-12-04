@@ -1,4 +1,4 @@
-package com.thesaugat.appcommerce.home.fragments.home;
+package com.thesaugat.appcommerce.home.fragments.home.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -21,7 +21,7 @@ public class ShopAdapter extends RecyclerView.Adapter<ShopAdapter.ShopViewHolder
     LayoutInflater layoutInflater;
 
 
-    ShopAdapter(List<Product> productDataList, Context context) {
+    public ShopAdapter(List<Product> productDataList, Context context) {
         this.productDataList = productDataList;
         layoutInflater = LayoutInflater.from(context);
     }

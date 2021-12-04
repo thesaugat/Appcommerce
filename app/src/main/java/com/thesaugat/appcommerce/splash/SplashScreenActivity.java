@@ -38,6 +38,6 @@ public class SplashScreenActivity extends AppCompatActivity {
     }
 
     public void getIsLoggedInOrNot() {
-        isLoggedIn = SharedPrefUtils.getBool(this, getString(R.string.isLoggedKey), false);
+        isLoggedIn = SharedPrefUtils.getBool(this, getString(R.string.isLogged), false);
     }
 }

@@ -10,5 +10,6 @@
     <color name="orange">#ED8E02</color>
     <color name="priceGray">#9C9898</color>
     <color name="primaryColor">#7762FF</color>
+    <color name="grey_divider">#E7E8EC</color>
 
 </resources>

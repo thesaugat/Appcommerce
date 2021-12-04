@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
@@ -17,7 +18,11 @@ import android.widget.Toast;
 import com.thesaugat.appcommerce.R;
 import com.thesaugat.appcommerce.api.ApiClient;
 import com.thesaugat.appcommerce.api.response.AllProductResponse;
+import com.thesaugat.appcommerce.api.response.Category;
+import com.thesaugat.appcommerce.api.response.CategoryResponse;
 import com.thesaugat.appcommerce.api.response.Product;
+import com.thesaugat.appcommerce.home.fragments.home.adapters.CategoryAdapter;
+import com.thesaugat.appcommerce.home.fragments.home.adapters.ShopAdapter;
 
 import java.util.List;
 
@@ -27,7 +32,7 @@ import retrofit2.Response;
 
 
 public class HomeFragment extends Fragment {
-    RecyclerView allProductRV;
+    RecyclerView allProductRV, categoryRV;
     ProgressBar loadingProgress;
 
     @Override
@@ -41,9 +46,46 @@ public class HomeFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         allProductRV = view.findViewById(R.id.allProductRV);
+        categoryRV = view.findViewById(R.id.categoryRV);
         loadingProgress = view.findViewById(R.id.loadingProgress);
         serverCall();
+        getCategoriesOnline();
 
+
+    }
+
+    private void getCategoriesOnline() {
+        Call<CategoryResponse> getCategories = ApiClient.getClient().getCategories();
+        getCategories.enqueue(new Callback<CategoryResponse>() {
+            @Override
+            public void onResponse(Call<CategoryResponse> call, Response<CategoryResponse> response) {
+                if (response.isSuccessful()) {
+                    if (!response.body().getError()) {
+
+                        showCategories(response.body().getCategories());
+
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<CategoryResponse> call, Throwable t) {
+
+            }
+        });
+
+    }
+
+    private void showCategories(List<Category> categories) {
+        if (categories.size() > 8) {
+
+        } else {
+
+        }
+        categoryRV.setHasFixedSize(true);
+        categoryRV.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
+        CategoryAdapter categoryAdapter = new CategoryAdapter(categories, getContext());
+        categoryRV.setAdapter(categoryAdapter);
 
     }
 
@@ -69,7 +111,7 @@ public class HomeFragment extends Fragment {
 
     private void setProdctRecyclerView(List<Product> products) {
         allProductRV.setHasFixedSize(true);
-        allProductRV.setLayoutManager(new GridLayoutManager(getActivity(),2));
+        allProductRV.setLayoutManager(new GridLayoutManager(getActivity(), 2));
         ShopAdapter shopAdapter = new ShopAdapter(products, getContext());
         allProductRV.setAdapter(shopAdapter);
     }

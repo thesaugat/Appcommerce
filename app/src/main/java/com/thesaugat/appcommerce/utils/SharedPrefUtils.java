@@ -37,4 +37,3 @@ public class SharedPrefUtils {
         editor.apply();
     }
 }
-
