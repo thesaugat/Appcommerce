@@ -28,7 +28,7 @@
         <activity
             android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar"
             android:name=".home.MainActivity"
-            android:exported="true"></activity>
+            android:exported="true" />
     </application>
 
 </manifest>

@@ -23,8 +23,11 @@ import com.thesaugat.appcommerce.api.response.CategoryResponse;
 import com.thesaugat.appcommerce.api.response.Product;
 import com.thesaugat.appcommerce.home.fragments.home.adapters.CategoryAdapter;
 import com.thesaugat.appcommerce.home.fragments.home.adapters.ShopAdapter;
+import com.thesaugat.appcommerce.utils.DataHolder;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -50,8 +53,6 @@ public class HomeFragment extends Fragment {
         loadingProgress = view.findViewById(R.id.loadingProgress);
         serverCall();
         getCategoriesOnline();
-
-
     }
 
     private void getCategoriesOnline() {
@@ -61,7 +62,7 @@ public class HomeFragment extends Fragment {
             public void onResponse(Call<CategoryResponse> call, Response<CategoryResponse> response) {
                 if (response.isSuccessful()) {
                     if (!response.body().getError()) {
-
+                        DataHolder.categories = response.body().getCategories();
                         showCategories(response.body().getCategories());
 
                     }
@@ -77,14 +78,18 @@ public class HomeFragment extends Fragment {
     }
 
     private void showCategories(List<Category> categories) {
+        List<Category> temp;
         if (categories.size() > 8) {
-
+            temp = new ArrayList<>();
+            for (int i = 0; i < 8; i++) {
+                temp.add(categories.get(categories.size()-i-1));
+            }
         } else {
-
+            temp = categories;
         }
         categoryRV.setHasFixedSize(true);
         categoryRV.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
-        CategoryAdapter categoryAdapter = new CategoryAdapter(categories, getContext());
+        CategoryAdapter categoryAdapter = new CategoryAdapter(temp, getContext());
         categoryRV.setAdapter(categoryAdapter);
 
     }

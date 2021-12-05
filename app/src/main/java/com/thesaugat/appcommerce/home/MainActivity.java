@@ -14,6 +14,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 import com.thesaugat.appcommerce.R;
 import com.thesaugat.appcommerce.home.fragments.CartFragment;
+import com.thesaugat.appcommerce.home.fragments.CategoryFragment;
 import com.thesaugat.appcommerce.home.fragments.home.HomeFragment;
 import com.thesaugat.appcommerce.home.fragments.ProfileFragment;
 import com.thesaugat.appcommerce.home.fragments.WishListFragment;
@@ -24,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
     ProfileFragment profileFragment;
     CartFragment cartFragment;
     WishListFragment wishListFragment;
+    CategoryFragment categoryFragment;
     Fragment currentFragment;
 
 
@@ -48,7 +50,12 @@ public class MainActivity extends AppCompatActivity {
                     return true;
 
                 }
-                if (item.getTitle().equals(getString(R.string.cart))) {
+                if (item.getTitle().equals(getString(R.string.categories))) {
+                    if (categoryFragment == null)
+                        categoryFragment = new CategoryFragment();
+                    changeFragment(categoryFragment);
+                    return true;
+                } if (item.getTitle().equals(getString(R.string.cart))) {
                     if (cartFragment == null)
                         cartFragment = new CartFragment();
                     changeFragment(cartFragment);

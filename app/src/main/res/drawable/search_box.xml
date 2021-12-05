@@ -11,6 +11,6 @@
         android:color="@color/grey_divider"/>
 
     <corners
-        android:radius="16dp"/>
+        android:radius="14dp"/>
 
 </shape>
