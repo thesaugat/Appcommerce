@@ -4,6 +4,7 @@ import com.thesaugat.appcommerce.api.response.AllProductResponse;
 import com.thesaugat.appcommerce.api.response.CategoryResponse;
 import com.thesaugat.appcommerce.api.response.LoginResponse;
 import com.thesaugat.appcommerce.api.response.RegisterResponse;
+import com.thesaugat.appcommerce.api.response.SliderResponse;
 
 import retrofit2.Call;
 import retrofit2.http.Field;
@@ -26,4 +27,7 @@ public interface ApiService {
 
     @GET("/api/v1/get-categories")
     Call<CategoryResponse> getCategories();
+
+    @GET("/api/v1/slider")
+    Call<SliderResponse> getSliders();
 }

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.thesaugat.appcommerce">
-    <uses-permission android:name="android.permission.INTERNET"/>
 
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -12,9 +12,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Appcommerce">
         <activity
-            android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar"
+            android:name=".singleProductPage.SingleProductActivity"
+            android:exported="false" />
+        <activity
             android:name=".userAccount.UserAccountActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar" />
         <activity
             android:name=".splash.SplashScreenActivity"
             android:exported="true"
@@ -26,9 +29,9 @@
             </intent-filter>
         </activity>
         <activity
-            android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar"
             android:name=".home.MainActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar" />
     </application>
 
 </manifest>

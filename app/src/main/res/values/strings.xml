@@ -25,4 +25,7 @@
     <string name="created_key" translatable="false">ck</string>
     <string name="category">Category</string>
     <string name="categories">Categories</string>
+
+
+
 </resources>

@@ -1,10 +1,12 @@
 package com.thesaugat.appcommerce.home.fragments.home;
 
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -15,15 +17,22 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnimationType;
+import com.smarteist.autoimageslider.SliderAnimations;
+import com.smarteist.autoimageslider.SliderView;
 import com.thesaugat.appcommerce.R;
 import com.thesaugat.appcommerce.api.ApiClient;
 import com.thesaugat.appcommerce.api.response.AllProductResponse;
 import com.thesaugat.appcommerce.api.response.Category;
 import com.thesaugat.appcommerce.api.response.CategoryResponse;
 import com.thesaugat.appcommerce.api.response.Product;
+import com.thesaugat.appcommerce.api.response.Slider;
+import com.thesaugat.appcommerce.api.response.SliderResponse;
 import com.thesaugat.appcommerce.home.fragments.home.adapters.CategoryAdapter;
 import com.thesaugat.appcommerce.home.fragments.home.adapters.ShopAdapter;
+import com.thesaugat.appcommerce.home.fragments.home.adapters.SliderAdapter;
 import com.thesaugat.appcommerce.utils.DataHolder;
+import com.thesaugat.appcommerce.utils.ItemDecorationAlbumColumns;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,6 +46,8 @@ import retrofit2.Response;
 public class HomeFragment extends Fragment {
     RecyclerView allProductRV, categoryRV;
     ProgressBar loadingProgress;
+    SliderView imageSlider;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -51,8 +62,47 @@ public class HomeFragment extends Fragment {
         allProductRV = view.findViewById(R.id.allProductRV);
         categoryRV = view.findViewById(R.id.categoryRV);
         loadingProgress = view.findViewById(R.id.loadingProgress);
+        imageSlider = view.findViewById(R.id.imageSlider);
         serverCall();
         getCategoriesOnline();
+        getSliders();
+    }
+
+    private void getSliders() {
+        Call<SliderResponse> sliderResponseCall = ApiClient.getClient().getSliders();
+        sliderResponseCall.enqueue(new Callback<SliderResponse>() {
+            @Override
+            public void onResponse(Call<SliderResponse> call, Response<SliderResponse> response) {
+                if (response.isSuccessful()) {
+                    if (!response.body().getError()) {
+                        setSliders(response.body().getSliders());
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<SliderResponse> call, Throwable t) {
+
+            }
+        });
+    }
+
+    private void setSliders(List<Slider> sliders) {
+        SliderAdapter sliderAdapter = new SliderAdapter(sliders, getContext());
+        sliderAdapter.setClickLister(new SliderAdapter.OnSliderClickLister() {
+            @Override
+            public void onSliderClick(int position, Slider slider) {
+                Toast.makeText(getContext(), "from home This is item in position " + position, Toast.LENGTH_SHORT).show();
+            }
+        });
+        imageSlider.setSliderAdapter(sliderAdapter);
+        imageSlider.setIndicatorAnimation(IndicatorAnimationType.WORM); //set indicator animation by using IndicatorAnimationType. :WORM or THIN_WORM or COLOR or DROP or FILL or NONE or SCALE or SCALE_DOWN or SLIDE and SWAP!!
+        imageSlider.setSliderTransformAnimation(SliderAnimations.SIMPLETRANSFORMATION);
+        imageSlider.setAutoCycleDirection(SliderView.AUTO_CYCLE_DIRECTION_BACK_AND_FORTH);
+        imageSlider.setIndicatorUnselectedColor(Color.GRAY);
+        imageSlider.setScrollTimeInSec(4); //set scroll delay in seconds :
+        imageSlider.startAutoCycle();
+
     }
 
     private void getCategoriesOnline() {
@@ -82,7 +132,7 @@ public class HomeFragment extends Fragment {
         if (categories.size() > 8) {
             temp = new ArrayList<>();
             for (int i = 0; i < 8; i++) {
-                temp.add(categories.get(categories.size()-i-1));
+                temp.add(categories.get(categories.size() - i - 1));
             }
         } else {
             temp = categories;
@@ -116,7 +166,8 @@ public class HomeFragment extends Fragment {
 
     private void setProdctRecyclerView(List<Product> products) {
         allProductRV.setHasFixedSize(true);
-        allProductRV.setLayoutManager(new GridLayoutManager(getActivity(), 2));
+        GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), 2);
+        allProductRV.setLayoutManager(layoutManager);
         ShopAdapter shopAdapter = new ShopAdapter(products, getContext());
         allProductRV.setAdapter(shopAdapter);
     }
