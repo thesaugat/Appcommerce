@@ -88,7 +88,7 @@ public class HomeFragment extends Fragment {
     }
 
     private void setSliders(List<Slider> sliders) {
-        SliderAdapter sliderAdapter = new SliderAdapter(sliders, getContext());
+        SliderAdapter sliderAdapter = new SliderAdapter(sliders, getContext(), true);
         sliderAdapter.setClickLister(new SliderAdapter.OnSliderClickLister() {
             @Override
             public void onSliderClick(int position, Slider slider) {
@@ -139,7 +139,7 @@ public class HomeFragment extends Fragment {
         }
         categoryRV.setHasFixedSize(true);
         categoryRV.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
-        CategoryAdapter categoryAdapter = new CategoryAdapter(temp, getContext());
+        CategoryAdapter categoryAdapter = new CategoryAdapter(temp, getContext(), true);
         categoryRV.setAdapter(categoryAdapter);
 
     }

@@ -19,11 +19,13 @@ public class SliderAdapter extends SliderViewAdapter<SliderAdapter.SliderViewHol
     LayoutInflater inflater;
     Context context;
     OnSliderClickLister onSliderClickLister;
+    Boolean isFitted;
 
-    public SliderAdapter(List<Slider> sliders, Context context) {
+    public SliderAdapter(List<Slider> sliders, Context context, Boolean isFitted) {
         this.sliders = sliders;
         this.context = context;
         inflater = LayoutInflater.from(context);
+        this.isFitted = isFitted;
     }
 
     @Override
@@ -31,21 +33,21 @@ public class SliderAdapter extends SliderViewAdapter<SliderAdapter.SliderViewHol
         return new SliderViewHolder(inflater.inflate(R.layout.item_slider, parent, false));
     }
 
-    public void setClickLister( OnSliderClickLister onSliderClickLister){
+    public void setClickLister(OnSliderClickLister onSliderClickLister) {
         this.onSliderClickLister = onSliderClickLister;
 
     }
 
 
-
     @Override
     public void onBindViewHolder(SliderViewHolder viewHolder, int position) {
         Picasso.get().load(sliders.get(position).getImage()).into(viewHolder.imageViewBackground);
-
+        if (isFitted)
+            viewHolder.imageViewBackground.setScaleType(ImageView.ScaleType.FIT_XY);
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               onSliderClickLister.onSliderClick(position, sliders.get(position));
+                onSliderClickLister.onSliderClick(position, sliders.get(position));
             }
         });
 
