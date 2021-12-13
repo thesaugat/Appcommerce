@@ -6,6 +6,8 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -13,19 +15,30 @@ import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnima
 import com.smarteist.autoimageslider.SliderAnimations;
 import com.smarteist.autoimageslider.SliderView;
 import com.thesaugat.appcommerce.R;
+import com.thesaugat.appcommerce.api.ApiClient;
 import com.thesaugat.appcommerce.api.response.Product;
+import com.thesaugat.appcommerce.api.response.RegisterResponse;
 import com.thesaugat.appcommerce.api.response.Slider;
 import com.thesaugat.appcommerce.home.fragments.home.adapters.SliderAdapter;
+import com.thesaugat.appcommerce.utils.SharedPrefUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class SingleProductActivity extends AppCompatActivity {
     public static String key = "pKey";
     Product product;
     SliderView imageSlider;
-    ImageView backIV;
-    TextView name, price, desc, oldPrice;
+    ProgressBar addingCartPR;
+    ImageView backIV, plusIV, minusIV;
+    TextView name, price, desc, oldPrice, quantityTV;
+    LinearLayout addToCartLL;
+    int quantity = 1;
+    boolean isAdding = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,8 +52,13 @@ public class SingleProductActivity extends AppCompatActivity {
         imageSlider = findViewById(R.id.imageSlider);
         name = findViewById(R.id.productNameTV);
         price = findViewById(R.id.productPriceTV);
+        quantityTV = findViewById(R.id.quantityTV);
         oldPrice = findViewById(R.id.productOldPriceTV);
+        addToCartLL = findViewById(R.id.addToCartLL);
+        addingCartPR = findViewById(R.id.addingCartPR);
         desc = findViewById(R.id.decTV);
+        plusIV = findViewById(R.id.plusIV);
+        minusIV = findViewById(R.id.minusIV);
         setOnclickListners();
         if (getIntent().getSerializableExtra(key) != null) {
             product = (Product) getIntent().getSerializableExtra(key);
@@ -53,15 +71,16 @@ public class SingleProductActivity extends AppCompatActivity {
         setSliders(product.getImages());
         name.setText(product.getName());
 
-        if (product.getDiscountPrice() == 0|| product.getDiscountPrice()==null) {
+        if (product.getDiscountPrice() == 0 || product.getDiscountPrice() == null) {
             price.setText("Rs. " + product.getPrice());
             oldPrice.setVisibility(View.INVISIBLE);
 
-        }else {
+        } else {
             price.setText("Rs. " + product.getDiscountPrice());
             oldPrice.setText("Rs. " + product.getPrice());
 
-        }        desc.setText(product.getDescription());
+        }
+        desc.setText(product.getDescription());
 
     }
 
@@ -89,11 +108,67 @@ public class SingleProductActivity extends AppCompatActivity {
     }
 
     private void setOnclickListners() {
-        backIV.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
+        backIV.setOnClickListener(v -> finish());
+
+        plusIV.setOnClickListener(v -> {
+
+            if (quantity > 9)
+                Toast.makeText(this, "You can only buy 10 items at once", Toast.LENGTH_SHORT).show();
+            else
+                quantity++;
+
+            setQuantity();
         });
+        minusIV.setOnClickListener(v -> {
+
+            if (quantity < 2)
+                Toast.makeText(this, "Quantity should be atleast 1", Toast.LENGTH_SHORT).show();
+            else
+                quantity--;
+            setQuantity();
+        });
+
+        addToCartLL.setOnClickListener(v -> {
+
+            if (!isAdding) {
+                isAdding = true;
+                addingToggle(true);
+                String key = SharedPrefUtils.getString(this, getString(R.string.api_key));
+                Call<RegisterResponse> cartCall = ApiClient.getClient().addToCart(key, product.getId(), quantity);
+                cartCall.enqueue(new Callback<RegisterResponse>() {
+                    @Override
+                    public void onResponse(Call<RegisterResponse> call, Response<RegisterResponse> response) {
+                        if (response.isSuccessful()) {
+                            Toast.makeText(getApplicationContext(), response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                        addingToggle(false);
+                        isAdding = false;
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<RegisterResponse> call, Throwable t) {
+                        addingToggle(false);
+                        isAdding = false;
+                    }
+                });
+            }
+            else {
+                Toast.makeText(getApplicationContext(), "Adding Already!!", Toast.LENGTH_SHORT).show();
+            }
+
+        });
+    }
+
+    private void setQuantity() {
+        quantityTV.setText(quantity + "");
+    }
+
+    private void addingToggle(Boolean b) {
+        if (b)
+            addingCartPR.setVisibility(View.VISIBLE);
+        else {
+            addingCartPR.setVisibility(View.GONE);
+        }
     }
 }

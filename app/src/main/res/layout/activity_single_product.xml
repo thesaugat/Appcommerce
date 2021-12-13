@@ -141,14 +141,15 @@
                 android:padding="@dimen/smallSpacing">
 
                 <ImageView
+                    android:id="@+id/minusIV"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_round_add_24" />
 
                 <TextView
+                    android:id="@+id/quantityTV"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-
                     android:layout_marginStart="@dimen/smallSpacing"
                     android:layout_marginEnd="@dimen/smallSpacing"
                     android:layout_weight="1"
@@ -158,6 +159,7 @@
                     android:textStyle="bold" />
 
                 <ImageView
+                    android:id="@+id/plusIV"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_round_add_24" />
@@ -212,6 +214,13 @@
             android:text="Add To Cart"
             android:textColor="@color/white"
             android:textSize="18sp" />
+
+        <ProgressBar
+            android:id="@+id/addingCartPR"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/normaLspacing"
+            android:visibility="gone" />
 
 
     </LinearLayout>

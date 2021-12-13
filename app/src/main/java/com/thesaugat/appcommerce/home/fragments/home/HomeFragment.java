@@ -168,7 +168,7 @@ public class HomeFragment extends Fragment {
         allProductRV.setHasFixedSize(true);
         GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), 2);
         allProductRV.setLayoutManager(layoutManager);
-        ShopAdapter shopAdapter = new ShopAdapter(products, getContext());
+        ShopAdapter shopAdapter = new ShopAdapter(products, getContext(),false);
         allProductRV.setAdapter(shopAdapter);
     }
 

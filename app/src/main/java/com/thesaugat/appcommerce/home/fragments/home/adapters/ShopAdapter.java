@@ -23,18 +23,22 @@ public class ShopAdapter extends RecyclerView.Adapter<ShopAdapter.ShopViewHolder
     List<Product> productDataList;
     LayoutInflater layoutInflater;
     Context context;
+    Boolean isCart = false;
 
-
-    public ShopAdapter(List<Product> productDataList, Context context) {
+    public ShopAdapter(List<Product> productDataList, Context context, Boolean isCart) {
         this.productDataList = productDataList;
         this.context = context;
         layoutInflater = LayoutInflater.from(context);
+        this.isCart = isCart;
     }
 
 
     @NonNull
     @Override
     public ShopViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        if(isCart)
+            return new ShopViewHolder(layoutInflater.inflate(R.layout.item_cart, parent, false));
+            else
         return new ShopViewHolder(layoutInflater.inflate(R.layout.item_product, parent, false));
     }
 
