@@ -21,8 +21,8 @@
 
 
     <TextView
-        android:layout_marginStart="@dimen/smallSpacing"
-        android:layout_marginEnd="@dimen/smallSpacing"
+        android:layout_marginStart="@dimen/small_spacing"
+        android:layout_marginEnd="@dimen/small_spacing"
         android:background="@drawable/rectange_box"
         android:backgroundTint="@color/grey_divider"
         android:id="@+id/catNameTV"

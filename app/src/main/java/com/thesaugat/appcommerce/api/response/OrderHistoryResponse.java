@@ -3,14 +3,13 @@ package com.thesaugat.appcommerce.api.response;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import java.io.Serializable;
 import java.util.List;
 
-public class AllProductResponse implements Serializable {
+public class OrderHistoryResponse {
 
-@SerializedName("products")
+@SerializedName("order_history")
 @Expose
-private List<Product> products = null;
+private List<OrderHistory> orderHistory = null;
 @SerializedName("error")
 @Expose
 private Boolean error;
@@ -18,12 +17,12 @@ private Boolean error;
 @Expose
 private String message;
 
-public List<Product> getProducts() {
-return products;
+public List<OrderHistory> getOrderHistory() {
+return orderHistory;
 }
 
-public void setProducts(List<Product> products) {
-this.products = products;
+public void setOrderHistory(List<OrderHistory> orderHistory) {
+this.orderHistory = orderHistory;
 }
 
 public Boolean getError() {

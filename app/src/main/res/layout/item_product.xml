@@ -37,7 +37,7 @@
             android:layout_height="wrap_content"
             android:maxLines="2"
             android:text="Rs. 8000"
-            android:textColor="@color/orange"
+            android:textColor="@color/primaryColor"
             android:textSize="16sp" />
 
 

@@ -88,7 +88,6 @@ public class CategoryActivity extends AppCompatActivity {
         }
     }
 
-
     private void showCategoriesProducts(List<Product> products) {
         allProductsRV.setHasFixedSize(true);
         GridLayoutManager layoutManager = new GridLayoutManager(this, 2);

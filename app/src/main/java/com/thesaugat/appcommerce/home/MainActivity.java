@@ -38,10 +38,13 @@ public class MainActivity extends AppCompatActivity {
         bottomNavigationView = findViewById(R.id.homeBottomNav);
         homeFragment = new HomeFragment();
         currentFragment = homeFragment;
+
         getSupportFragmentManager().beginTransaction().add(R.id.homeFrameContainer, homeFragment).commit();
+
         bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
 
                 if (item.getTitle().equals(getString(R.string.home))) {
                     if (homeFragment == null)

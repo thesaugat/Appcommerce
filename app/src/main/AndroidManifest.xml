@@ -12,6 +12,18 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Appcommerce">
         <activity
+            android:name=".checkout.orderComplete.OrderCompleteActivity"
+            android:exported="false"
+            android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar"
+            />
+        <activity
+            android:name=".checkout.address.AddressActivity"
+            android:exported="false" />
+        <activity
+            android:name=".checkout.CheckOutActivity"
+            android:exported="false"
+            android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar" />
+        <activity
             android:name=".categoryActivity.CategoryActivity"
             android:exported="false" />
         <activity
