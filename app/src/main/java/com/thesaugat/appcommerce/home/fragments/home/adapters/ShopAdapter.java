@@ -66,7 +66,8 @@ public class ShopAdapter extends RecyclerView.Adapter<ShopAdapter.ShopViewHolder
             @Override
             public void onClick(View v) {
                 Intent productPage = new Intent(context, SingleProductActivity.class);
-                productPage.putExtra(SingleProductActivity.key, productDataList.get(holder.getAdapterPosition()));
+                System.out.println(productDataList.get(holder.getAdapterPosition()).getImages());
+                productPage.putExtra(SingleProductActivity.DATA_KEY, productDataList.get(holder.getAdapterPosition()));
                 context.startActivity(productPage);
             }
         });
@@ -82,18 +83,20 @@ public class ShopAdapter extends RecyclerView.Adapter<ShopAdapter.ShopViewHolder
 
                 holder.removeCartIV.setVisibility(View.GONE);
                 holder.mainLL.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
-          setMargins(holder.mainLL,0,0,16,0);
+                setMargins(holder.mainLL, 0, 0, 16, 0);
             }
             holder.quantityTV.setText(productDataList.get(position).getCartQuantity() + "");
         }
     }
-    public static void setMargins (View v, int l, int t, int r, int b) {
+
+    public static void setMargins(View v, int l, int t, int r, int b) {
         if (v.getLayoutParams() instanceof ViewGroup.MarginLayoutParams) {
             ViewGroup.MarginLayoutParams p = (ViewGroup.MarginLayoutParams) v.getLayoutParams();
             p.setMargins(l, t, r, b);
             v.requestLayout();
         }
     }
+
     @Override
     public int getItemCount() {
         return productDataList.size();

@@ -17,6 +17,7 @@ import com.thesaugat.appcommerce.R;
 import com.thesaugat.appcommerce.api.response.Category;
 import com.thesaugat.appcommerce.home.fragments.home.adapters.CategoryAdapter;
 import com.thesaugat.appcommerce.utils.DataHolder;
+import com.thesaugat.appcommerce.utils.UserInterfaceUtils;
 
 import java.util.List;
 
@@ -28,8 +29,10 @@ public class CategoryFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+
         return inflater.inflate(R.layout.fragment_category, container, false);
     }
+
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {

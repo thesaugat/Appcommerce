@@ -3,18 +3,27 @@ package com.thesaugat.appcommerce.api;
 import com.thesaugat.appcommerce.api.response.AddressResponse;
 import com.thesaugat.appcommerce.api.response.AllProductResponse;
 import com.thesaugat.appcommerce.api.response.CategoryResponse;
+import com.thesaugat.appcommerce.api.response.DashResponse;
 import com.thesaugat.appcommerce.api.response.LoginResponse;
 import com.thesaugat.appcommerce.api.response.OrderHistoryResponse;
 import com.thesaugat.appcommerce.api.response.RegisterResponse;
+import com.thesaugat.appcommerce.api.response.SingleProductResponse;
 import com.thesaugat.appcommerce.api.response.SliderResponse;
 
+import java.io.File;
+import java.util.List;
+
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.DELETE;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
 import retrofit2.http.Query;
 
 public interface ApiService {
@@ -62,7 +71,31 @@ public interface ApiService {
     @DELETE("/api/v1/cart")
     Call<RegisterResponse> deleteFromCart(@Header("Apikey") String apikey, @Query("c_id") int cartID);
 
+    @GET("/api/v1/get-all-products")
+    Call<SingleProductResponse> getProductById(@Query("id") int c_id);
 
     @GET("/api/v1/address")
     Call<AddressResponse> getMyAddresses(@Header("Apikey") String apikey);
+
+    @FormUrlEncoded
+    @POST("/api/v1/address")
+    Call<RegisterResponse> addAddress(
+            @Header("Apikey") String apikey,
+            @Field("city") String city,
+            @Field("street") String street,
+            @Field("province") String province,
+            @Field("description") String description);
+
+    @Multipart
+    @POST("/api/v1/upload-category")
+    Call<RegisterResponse> uploadCategory(
+            @Header("Apikey") String apikey,
+            @Part MultipartBody.Part file,
+            @Part("name") RequestBody name
+
+    );
+
+    @GET("/api/v1/dash")
+    Call<DashResponse> getDash(@Header("Apikey") String apikey);
+
 }

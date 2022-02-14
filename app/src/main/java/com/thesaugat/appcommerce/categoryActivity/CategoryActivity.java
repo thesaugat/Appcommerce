@@ -26,6 +26,7 @@ import retrofit2.Response;
 
 public class CategoryActivity extends AppCompatActivity {
     public static String CATEGORY_DATA_KEY = "cdk";
+    public static String CAT_KEY = "ctk";
     Category category;
     RecyclerView allProductsRV;
     ImageView emptyIV;
@@ -42,9 +43,9 @@ public class CategoryActivity extends AppCompatActivity {
         emptyIV = findViewById(R.id.emptyIV);
 
         category = (Category) getIntent().getSerializableExtra(CATEGORY_DATA_KEY);
-        getSupportActionBar().setTitle(category.getName());
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle(category.getName());
         getCategoryOnline();
     }
 

@@ -1,5 +1,6 @@
 package com.thesaugat.appcommerce.home.fragments.home;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 
@@ -14,9 +15,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnimationType;
 import com.smarteist.autoimageslider.SliderAnimations;
 import com.smarteist.autoimageslider.SliderView;
@@ -28,11 +32,14 @@ import com.thesaugat.appcommerce.api.response.CategoryResponse;
 import com.thesaugat.appcommerce.api.response.Product;
 import com.thesaugat.appcommerce.api.response.Slider;
 import com.thesaugat.appcommerce.api.response.SliderResponse;
+import com.thesaugat.appcommerce.categoryActivity.CategoryActivity;
 import com.thesaugat.appcommerce.home.fragments.home.adapters.CategoryAdapter;
 import com.thesaugat.appcommerce.home.fragments.home.adapters.ShopAdapter;
 import com.thesaugat.appcommerce.home.fragments.home.adapters.SliderAdapter;
+import com.thesaugat.appcommerce.singleProductPage.SingleProductActivity;
 import com.thesaugat.appcommerce.utils.DataHolder;
 import com.thesaugat.appcommerce.utils.ItemDecorationAlbumColumns;
+import com.thesaugat.appcommerce.utils.UserInterfaceUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,14 +54,23 @@ public class HomeFragment extends Fragment {
     RecyclerView allProductRV, categoryRV;
     ProgressBar loadingProgress;
     SliderView imageSlider;
-
+    TextView viewAllTV;
+    LinearLayout searchLL;
+    BottomNavigationView bottomNavigationView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+
         return inflater.inflate(R.layout.fragment_home, container, false);
     }
+
+    public void setBottomNavigationView(BottomNavigationView bottomNavigationView) {
+        this.bottomNavigationView = bottomNavigationView;
+    }
+
+
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -63,9 +79,28 @@ public class HomeFragment extends Fragment {
         categoryRV = view.findViewById(R.id.categoryRV);
         loadingProgress = view.findViewById(R.id.loadingProgress);
         imageSlider = view.findViewById(R.id.imageSlider);
+        viewAllTV = view.findViewById(R.id.viewAllTV);
+        searchLL = view.findViewById(R.id.searchLL);
         serverCall();
         getCategoriesOnline();
         getSliders();
+        setClickListeners();
+    }
+
+    private void setClickListeners() {
+        viewAllTV.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                bottomNavigationView.setSelectedItemId(R.id.catMenu);
+            }
+        });
+        searchLL.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
     }
 
     private void getSliders() {
@@ -92,7 +127,19 @@ public class HomeFragment extends Fragment {
         sliderAdapter.setClickLister(new SliderAdapter.OnSliderClickLister() {
             @Override
             public void onSliderClick(int position, Slider slider) {
-                Toast.makeText(getContext(), "from home This is item in position " + position, Toast.LENGTH_SHORT).show();
+
+                if (slider.getType() == 1) {
+                    Intent intent = new Intent(getContext(), SingleProductActivity.class);
+                    intent.putExtra(SingleProductActivity.SINGLE_DATA_KEY, slider.getRelatedId());
+                    getContext().startActivity(intent);
+                } else if (slider.getType() == 2) {
+                    Intent cat = new Intent(getContext(), CategoryActivity.class);
+                    Category category = new Category();
+                    category.setId(slider.getRelatedId());
+                    category.setName(slider.getDesc());
+                    cat.putExtra(CategoryActivity.CATEGORY_DATA_KEY, category);
+                    getContext().startActivity(cat);
+                }
             }
         });
         imageSlider.setSliderAdapter(sliderAdapter);
@@ -168,7 +215,7 @@ public class HomeFragment extends Fragment {
         allProductRV.setHasFixedSize(true);
         GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), 2);
         allProductRV.setLayoutManager(layoutManager);
-        ShopAdapter shopAdapter = new ShopAdapter(products, getContext(),false);
+        ShopAdapter shopAdapter = new ShopAdapter(products, getContext(), false);
         allProductRV.setAdapter(shopAdapter);
     }
 

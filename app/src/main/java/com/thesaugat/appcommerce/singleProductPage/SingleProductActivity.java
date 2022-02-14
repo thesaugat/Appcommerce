@@ -18,6 +18,7 @@ import com.thesaugat.appcommerce.R;
 import com.thesaugat.appcommerce.api.ApiClient;
 import com.thesaugat.appcommerce.api.response.Product;
 import com.thesaugat.appcommerce.api.response.RegisterResponse;
+import com.thesaugat.appcommerce.api.response.SingleProductResponse;
 import com.thesaugat.appcommerce.api.response.Slider;
 import com.thesaugat.appcommerce.home.fragments.home.adapters.SliderAdapter;
 import com.thesaugat.appcommerce.utils.SharedPrefUtils;
@@ -30,7 +31,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class SingleProductActivity extends AppCompatActivity {
-    public static String key = "pKey";
+    public static String DATA_KEY = "ds";
+    public static String SINGLE_DATA_KEY = "sds";
     Product product;
     SliderView imageSlider;
     ProgressBar addingCartPR;
@@ -59,18 +61,40 @@ public class SingleProductActivity extends AppCompatActivity {
         desc = findViewById(R.id.decTV);
         plusIV = findViewById(R.id.plusIV);
         minusIV = findViewById(R.id.minusIV);
-        setOnclickListners();
-        if (getIntent().getSerializableExtra(key) != null) {
-            product = (Product) getIntent().getSerializableExtra(key);
+        if (getIntent().getSerializableExtra(DATA_KEY) != null) {
+            product = (Product) getIntent().getSerializableExtra(DATA_KEY);
             setProduct(product);
-        }
+        } else if (getIntent().getSerializableExtra(SINGLE_DATA_KEY) != null)
+            getProductOnline(getIntent().getIntExtra(SINGLE_DATA_KEY, 1));
+        setOnclickListners();
+    }
+
+    private void getProductOnline(int intExtra) {
+        Call<SingleProductResponse> productResponseCall = ApiClient.getClient().getProductById(intExtra);
+        productResponseCall.enqueue(new Callback<SingleProductResponse>() {
+            @Override
+            public void onResponse(Call<SingleProductResponse> call, Response<SingleProductResponse> response) {
+                if (response.isSuccessful()) {
+                    if (!response.body().getError()) {
+                        product = response.body().getProduct();
+                        setProduct(product);
+                    }
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<SingleProductResponse> call, Throwable t) {
+
+            }
+        });
 
     }
+
 
     private void setProduct(Product product) {
         setSliders(product.getImages());
         name.setText(product.getName());
-
         if (product.getDiscountPrice() == 0 || product.getDiscountPrice() == null) {
             price.setText("Rs. " + product.getPrice());
             oldPrice.setVisibility(View.INVISIBLE);
@@ -152,8 +176,7 @@ public class SingleProductActivity extends AppCompatActivity {
                         isAdding = false;
                     }
                 });
-            }
-            else {
+            } else {
                 Toast.makeText(getApplicationContext(), "Adding Already!!", Toast.LENGTH_SHORT).show();
             }
 

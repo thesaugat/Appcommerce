@@ -18,6 +18,7 @@ import com.thesaugat.appcommerce.home.fragments.CategoryFragment;
 import com.thesaugat.appcommerce.home.fragments.home.HomeFragment;
 import com.thesaugat.appcommerce.home.fragments.ProfileFragment;
 import com.thesaugat.appcommerce.home.fragments.WishListFragment;
+import com.thesaugat.appcommerce.utils.UserInterfaceUtils;
 
 public class MainActivity extends AppCompatActivity {
     BottomNavigationView bottomNavigationView;
@@ -37,10 +38,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         bottomNavigationView = findViewById(R.id.homeBottomNav);
         homeFragment = new HomeFragment();
+        homeFragment.setBottomNavigationView(bottomNavigationView);
         currentFragment = homeFragment;
-
         getSupportFragmentManager().beginTransaction().add(R.id.homeFrameContainer, homeFragment).commit();
-
         bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -58,7 +58,8 @@ public class MainActivity extends AppCompatActivity {
                         categoryFragment = new CategoryFragment();
                     changeFragment(categoryFragment);
                     return true;
-                } if (item.getTitle().equals(getString(R.string.cart))) {
+                }
+                if (item.getTitle().equals(getString(R.string.cart))) {
                     if (cartFragment == null)
                         cartFragment = new CartFragment();
                     changeFragment(cartFragment);
@@ -84,6 +85,10 @@ public class MainActivity extends AppCompatActivity {
 
     void changeFragment(Fragment fragment) {
         getSupportFragmentManager().beginTransaction().hide(currentFragment).commit();
+        if (fragment == profileFragment)
+            UserInterfaceUtils.changeStatusBarColor(this,true);
+        else
+            UserInterfaceUtils.changeStatusBarColor(this, false);
 
         if (fragment.isAdded()) {
             getSupportFragmentManager().beginTransaction().show(fragment).commit();

@@ -26,6 +26,7 @@ import com.thesaugat.appcommerce.api.response.RegisterResponse;
 import com.thesaugat.appcommerce.checkout.CheckOutActivity;
 import com.thesaugat.appcommerce.home.fragments.home.adapters.ShopAdapter;
 import com.thesaugat.appcommerce.utils.SharedPrefUtils;
+import com.thesaugat.appcommerce.utils.UserInterfaceUtils;
 
 import java.util.List;
 
@@ -46,10 +47,12 @@ public class CartFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+
         return inflater.inflate(R.layout.fragment_cart, container, false);
     }
 
     @Override
+
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         allProductRV = view.findViewById(R.id.allProductRV);
@@ -135,7 +138,7 @@ public class CartFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        getCartItems();
+       getCartItems();
     }
 
     private void setPrice() {
