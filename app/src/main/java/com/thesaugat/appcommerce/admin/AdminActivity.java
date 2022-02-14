@@ -33,6 +33,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.thesaugat.appcommerce.R;
+import com.thesaugat.appcommerce.admin.addCategory.ListCategoryActivity;
+import com.thesaugat.appcommerce.admin.products.ListProductsActivity;
 import com.thesaugat.appcommerce.api.ApiClient;
 import com.thesaugat.appcommerce.api.response.Dash;
 import com.thesaugat.appcommerce.api.response.DashResponse;
@@ -59,7 +61,7 @@ public class AdminActivity extends AppCompatActivity {
     private static final int PICK_PICTURE = 1;
     private static final String TEMP_DIRECT = "/Ecommerce/Picture/.temp/";
     TextView pendingOrdersTV, totalOrdersTV, shippedOrdersTV, totalCategoriesTV, totalCustomersTV, totalProductsTV;
-    LinearLayout addCategory, imageLayout;
+    LinearLayout addCategory, imageLayout, categoryList, productsLL;
     private Uri imageUri;
     String currentPhotoPath;
     ImageView selectedIV;
@@ -113,6 +115,8 @@ public class AdminActivity extends AppCompatActivity {
         shippedOrdersTV = findViewById(R.id.shippedOrdersTV);
         totalProductsTV = findViewById(R.id.totalProductsTV);
         addCategory = findViewById(R.id.addCategory);
+        categoryList = findViewById(R.id.categoryList);
+        productsLL = findViewById(R.id.productsLL);
         setClickListeners();
     }
 
@@ -123,6 +127,22 @@ public class AdminActivity extends AppCompatActivity {
                 openAddCategoryView();
             }
         });
+        categoryList.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(AdminActivity.this, ListCategoryActivity.class);
+                startActivity(intent);
+            }
+        });
+        productsLL.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(AdminActivity.this, ListProductsActivity.class);
+                startActivity(intent);
+            }
+        });
+
+
     }
 
 
@@ -242,8 +262,7 @@ public class AdminActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     dialog.dismiss();
                     Toast.makeText(AdminActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
-                }
-                else {
+                } else {
                     progressDialog.dismiss();
 
                     Toast.makeText(AdminActivity.this, "Upload Failed", Toast.LENGTH_SHORT).show();

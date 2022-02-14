@@ -98,4 +98,7 @@ public interface ApiService {
     @GET("/api/v1/dash")
     Call<DashResponse> getDash(@Header("Apikey") String apikey);
 
+    @DELETE("/api/v1/category")
+    Call<RegisterResponse> deleteCategory(@Header("Apikey") String apikey, @Query("c_id") int id);
+
 }
