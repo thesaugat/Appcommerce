@@ -30,17 +30,19 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:textStyle="bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/small_spacing"
-                    android:text="Pending Orders"
-                    android:textColor="@color/textSec" />
+                    android:text="New Orders"
+                    android:textColor="@color/primaryColor" />
 
                 <TextView
+                    android:textStyle="bold"
                     android:id="@+id/pendingOrdersTV"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/black"
+                    android:textColor="@color/primaryColor"
                     android:textSize="16sp" />
 
             </LinearLayout>
@@ -53,6 +55,7 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:textStyle="bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/small_spacing"
@@ -63,7 +66,7 @@
                     android:id="@+id/totalOrdersTV"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-
+                    android:textStyle="bold"
                     android:textColor="@color/black"
                     android:textSize="16sp" />
 
@@ -77,6 +80,7 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:textStyle="bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/small_spacing"
@@ -87,7 +91,7 @@
                     android:id="@+id/shippedOrdersTV"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-
+                    android:textStyle="bold"
                     android:textColor="@color/black"
                     android:textSize="16sp" />
 
@@ -101,6 +105,7 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:textStyle="bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/small_spacing"
@@ -108,6 +113,7 @@
                     android:textColor="@color/textSec" />
 
                 <TextView
+                    android:textStyle="bold"
                     android:id="@+id/totalCategoriesTV"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -124,6 +130,7 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:textStyle="bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/small_spacing"
@@ -132,7 +139,7 @@
 
                 <TextView
                     android:id="@+id/totalCustomersTV"
-
+                    android:textStyle="bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
 
@@ -149,6 +156,7 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:textStyle="bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/small_spacing"
@@ -158,7 +166,7 @@
                 <TextView
                     android:id="@+id/totalProductsTV"
                     android:layout_width="wrap_content"
-
+                    android:textStyle="bold"
                     android:layout_height="wrap_content"
                     android:textColor="@color/black"
                     android:textSize="16sp" />
