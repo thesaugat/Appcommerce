@@ -20,6 +20,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Appcommerce">
         <activity
+            android:name=".admin.addProduct.SelectCategoryActivity"
+            android:exported="false" />
+        <activity
+            android:name=".admin.addProduct.AddProductActivity"
+            android:exported="false" />
+        <activity
             android:name=".admin.products.ListProductsActivity"
             android:exported="false" />
         <activity

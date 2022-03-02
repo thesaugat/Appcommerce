@@ -34,6 +34,7 @@ import android.widget.Toast;
 
 import com.thesaugat.appcommerce.R;
 import com.thesaugat.appcommerce.admin.addCategory.ListCategoryActivity;
+import com.thesaugat.appcommerce.admin.addProduct.AddProductActivity;
 import com.thesaugat.appcommerce.admin.products.ListProductsActivity;
 import com.thesaugat.appcommerce.api.ApiClient;
 import com.thesaugat.appcommerce.api.response.Dash;
@@ -291,5 +292,10 @@ public class AdminActivity extends AppCompatActivity {
         // Save a file: path for use with ACTION_VIEW intents
         currentPhotoPath = image.getAbsolutePath();
         return image;
+    }
+
+    public void addProduct(View view) {
+        Intent intent = new Intent(this, AddProductActivity.class);
+        startActivity(intent);
     }
 }
