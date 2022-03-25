@@ -24,8 +24,8 @@
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:layout_marginStart="@dimen/small_spacing"
-                android:backgroundTint="@color/grey_divider"
                 android:background="@drawable/rectange_box"
+                android:backgroundTint="@color/grey_divider"
                 android:padding="4dp"
                 android:src="@drawable/ic_round_arrow_back_ios_new_24"
                 app:tint="@color/priceGray" />
@@ -58,9 +58,9 @@
             android:id="@+id/allProductsRV"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingStart="@dimen/normal_spacing"
             android:paddingTop="@dimen/normal_spacing"
             android:paddingBottom="@dimen/normal_spacing"
-            android:paddingStart="@dimen/normal_spacing"
 
             />
 
@@ -104,10 +104,10 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:drawableEnd="@drawable/ic_round_arrow_forward_ios_24"
                         android:id="@+id/cityStreetTV"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:drawableEnd="@drawable/ic_round_arrow_forward_ios_24"
                         android:paddingStart="@dimen/normal_spacing"
                         android:paddingTop="@dimen/small_spacing"
 
@@ -165,35 +165,25 @@
 
 
             <ImageView
-
-                android:background="@drawable/box_shape_selected"
+                android:id="@+id/codIV"
                 android:layout_width="70dp"
                 android:layout_height="70dp"
+                android:background="@drawable/box_shape_selected"
                 android:padding="@dimen/medium_spacing"
-                android:src="@drawable/cod"
-                app:civ_border_color="@color/primaryColor"
-                app:civ_border_width="1dp" />
+                android:src="@drawable/cod" />
+
 
 
             <ImageView
-                android:layout_marginStart="@dimen/normal_spacing"
-                android:background="@drawable/box_shape"
+                android:id="@+id/khaltiIV"
                 android:layout_width="70dp"
                 android:layout_height="70dp"
+                android:layout_marginStart="@dimen/normal_spacing"
+                android:background="@drawable/box_shape"
                 android:padding="@dimen/medium_spacing"
                 android:src="@drawable/khalti"
-                app:civ_border_color="@color/grey_divider"
-                app:civ_border_width="1dp" />
+                />
 
-            <ImageView
-                android:layout_marginStart="@dimen/normal_spacing"
-                android:background="@drawable/box_shape"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
-                android:padding="@dimen/medium_spacing"
-                android:src="@drawable/esewa"
-                app:civ_border_color="@color/grey_divider"
-                app:civ_border_width="1dp" />
 
 
         </LinearLayout>
@@ -255,6 +245,7 @@
 
 
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
